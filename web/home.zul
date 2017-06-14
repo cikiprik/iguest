@@ -1,0 +1,31 @@
+<zk>
+    <style src="/widgets/menu/navbar/style.css"/>
+    <div id="container" sclass="vertical" apply="org.zkoss.bind.BindComposer"
+         viewModel="@id('vm') @init('NavigationViewModel')">
+        <navbar id="navbar" orient="vertical" collapsed="false"
+                onSelect="@command('navigatePage', target=self.selectedItem.attributes['navigationPage'])">
+ 
+            <nav label="iGuest" iconSclass="z-icon-home"
+                 children="@load(vm.pageMap[self.label].values()) @template('navitem')"/>
+ 
+            <nav label="Room" iconSclass="z-icon-key"
+                 children="@load(vm.pageMap[self.label].values()) @template('navitem')"/>
+ 
+            
+            <nav label="Guest" iconSclass="z-icon-group"
+                 children="@load(vm.pageMap[self.label].values()) @template('navitem')"/>
+            <nav label="Reports" iconSclass="z-icon-print"
+                      children="@load(vm.pageMap[self.label].values()) @template('navitem')"/>
+            <nav label="Log Out" iconSclass="z-icon-power-off"  onOpen="@command('doLogout')"
+                      />
+ 
+            <template name="navitem" var="navigationPage">
+                <navitem label="@load(navigationPage.subTitle)" selected="@load(navigationPage.selected)"/>
+            </template>
+        </navbar>
+         
+        <include id="contentInclude" mode="instant" sclass="content"
+                 currentPage="@ref(vm.currentPage)"
+                 src="@load(currentPage.includeUri)" />
+    </div>
+</zk>

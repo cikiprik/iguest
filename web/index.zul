@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>-->
+<?page title="Login"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+                        http://www.zkoss.org/2005/zul/zul.xsd" >
+    
+    <hbox  vflex="1" hflex="1" align="center"
+          pack="center" spacing="20px" style="background : white;">
+        <vlayout>
+            <window  apply="com.iguest.mainCtl.Login" 
+             id="pnlLogin" border="none" width="350px" height="200px"
+		     title="" >
+        <panel >
+		<panelchildren>
+
+			<panel>
+				<panelchildren style="padding: 5px;">
+					<label style="font-size: 14px; font-weight: bold;">
+						Login to enter the iGuest System
+					</label>
+				</panelchildren>
+			</panel>
+			<panel>
+				<panelchildren style="padding: 5px;">
+					<grid>
+                        <columns>
+                            <column width="35%"/>
+                            <column width="65%" />
+                        </columns>
+						<rows>
+							<row>
+								<label value="Username " />
+								<textbox id="txtUsername" type="text" width="200px" placeholder="username" />
+							</row>
+							<row>
+								<label value="Password" />
+								<textbox id="txtPassword" type="password" width="200px" placeholder="password" />
+							</row>
+						</rows>
+					</grid>
+
+				</panelchildren>
+			</panel>
+
+			<panel>
+				<panelchildren style="float: right;padding: 5px;">
+					<button label="Login" id="btnLogin"   />
+				</panelchildren>
+			</panel>
+			<!-- for displaying login error message -->
+			<panel id="pnlErrorMessage" visible="false" border="false"
+				style="padding: 3px">
+				<panelchildren>
+					<label id="lblMessage" value=""
+						style="color: #ff0000;" />
+				</panelchildren>
+			</panel>
+		</panelchildren>
+        </panel>
+	</window>
+        </vlayout>
+    </hbox>
+    
+    
+    
+    
+
+	
+</zk>
