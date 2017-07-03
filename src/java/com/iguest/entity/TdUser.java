@@ -6,12 +6,16 @@
 package com.iguest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,10 +43,6 @@ public class TdUser implements Serializable {
     @NotNull
     @Column(name = "ID_USER")
     private Integer idUser;
-    @Column(name = "ID_EMPLOYEE")
-    private Integer idEmployee;
-    @Column(name = "ID_JNS_USER")
-    private Integer idJnsUser;
     @Column(name = "FLAG_AKTIF")
     private Boolean flagAktif;
     @Size(max = 64)
@@ -51,6 +51,14 @@ public class TdUser implements Serializable {
     @Size(max = 64)
     @Column(name = "PASSWORD")
     private String password;
+    @JoinColumn(name = "ID_EMPLOYEE", referencedColumnName = "ID_EMPLOYEE")
+    @ManyToOne
+    private TdEmployee idEmployee;
+    @JoinColumn(name = "ID_JNS_USER", referencedColumnName = "ID_JNS_USER")
+    @ManyToOne
+    private TrJnsUser idJnsUser;
+    @OneToMany(mappedBy = "idUser")
+    private List<TtLogSistem> ttLogSistemList;
 
     public TdUser() {
     }
@@ -65,22 +73,6 @@ public class TdUser implements Serializable {
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
-    }
-
-    public Integer getIdEmployee() {
-        return idEmployee;
-    }
-
-    public void setIdEmployee(Integer idEmployee) {
-        this.idEmployee = idEmployee;
-    }
-
-    public Integer getIdJnsUser() {
-        return idJnsUser;
-    }
-
-    public void setIdJnsUser(Integer idJnsUser) {
-        this.idJnsUser = idJnsUser;
     }
 
     public Boolean getFlagAktif() {
@@ -105,6 +97,30 @@ public class TdUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public TdEmployee getIdEmployee() {
+        return idEmployee;
+    }
+
+    public void setIdEmployee(TdEmployee idEmployee) {
+        this.idEmployee = idEmployee;
+    }
+
+    public TrJnsUser getIdJnsUser() {
+        return idJnsUser;
+    }
+
+    public void setIdJnsUser(TrJnsUser idJnsUser) {
+        this.idJnsUser = idJnsUser;
+    }
+
+    public List<TtLogSistem> getTtLogSistemList() {
+        return ttLogSistemList;
+    }
+
+    public void setTtLogSistemList(List<TtLogSistem> ttLogSistemList) {
+        this.ttLogSistemList = ttLogSistemList;
     }
 
     @Override

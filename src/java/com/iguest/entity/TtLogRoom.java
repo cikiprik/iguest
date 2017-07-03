@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,9 +29,6 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "TtLogRoom.findAll", query = "SELECT t FROM TtLogRoom t"),
     @NamedQuery(name = "TtLogRoom.findByIdLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.idLogRoom = :idLogRoom"),
-    @NamedQuery(name = "TtLogRoom.findByIdJnsLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.idJnsLogRoom = :idJnsLogRoom"),
-    @NamedQuery(name = "TtLogRoom.findByIdRoom", query = "SELECT t FROM TtLogRoom t WHERE t.idRoom = :idRoom"),
-    @NamedQuery(name = "TtLogRoom.findByIdRoomRent", query = "SELECT t FROM TtLogRoom t WHERE t.idRoomRent = :idRoomRent"),
     @NamedQuery(name = "TtLogRoom.findByWaktuLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.waktuLogRoom = :waktuLogRoom")})
 public class TtLogRoom implements Serializable {
 
@@ -39,15 +38,18 @@ public class TtLogRoom implements Serializable {
     @NotNull
     @Column(name = "ID_LOG_ROOM")
     private Integer idLogRoom;
-    @Column(name = "ID_JNS_LOG_ROOM")
-    private Integer idJnsLogRoom;
-    @Column(name = "ID_ROOM")
-    private Integer idRoom;
-    @Column(name = "ID_ROOM_RENT")
-    private Integer idRoomRent;
     @Column(name = "WAKTU_LOG_ROOM")
     @Temporal(TemporalType.TIMESTAMP)
     private Date waktuLogRoom;
+    @JoinColumn(name = "ID_JNS_LOG_ROOM", referencedColumnName = "ID_JNS_LOG_ROOM")
+    @ManyToOne
+    private TrJnsLogRoom idJnsLogRoom;
+    @JoinColumn(name = "ID_ROOM", referencedColumnName = "ID_ROOM")
+    @ManyToOne
+    private TdRoom idRoom;
+    @JoinColumn(name = "ID_ROOM_RENT", referencedColumnName = "ID_ROOM_RENT")
+    @ManyToOne
+    private TtRoomRent idRoomRent;
 
     public TtLogRoom() {
     }
@@ -64,36 +66,36 @@ public class TtLogRoom implements Serializable {
         this.idLogRoom = idLogRoom;
     }
 
-    public Integer getIdJnsLogRoom() {
-        return idJnsLogRoom;
-    }
-
-    public void setIdJnsLogRoom(Integer idJnsLogRoom) {
-        this.idJnsLogRoom = idJnsLogRoom;
-    }
-
-    public Integer getIdRoom() {
-        return idRoom;
-    }
-
-    public void setIdRoom(Integer idRoom) {
-        this.idRoom = idRoom;
-    }
-
-    public Integer getIdRoomRent() {
-        return idRoomRent;
-    }
-
-    public void setIdRoomRent(Integer idRoomRent) {
-        this.idRoomRent = idRoomRent;
-    }
-
     public Date getWaktuLogRoom() {
         return waktuLogRoom;
     }
 
     public void setWaktuLogRoom(Date waktuLogRoom) {
         this.waktuLogRoom = waktuLogRoom;
+    }
+
+    public TrJnsLogRoom getIdJnsLogRoom() {
+        return idJnsLogRoom;
+    }
+
+    public void setIdJnsLogRoom(TrJnsLogRoom idJnsLogRoom) {
+        this.idJnsLogRoom = idJnsLogRoom;
+    }
+
+    public TdRoom getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(TdRoom idRoom) {
+        this.idRoom = idRoom;
+    }
+
+    public TtRoomRent getIdRoomRent() {
+        return idRoomRent;
+    }
+
+    public void setIdRoomRent(TtRoomRent idRoomRent) {
+        this.idRoomRent = idRoomRent;
     }
 
     @Override

@@ -46,7 +46,7 @@ Button btnLogin;
             // ada user
             // create session
             session.setAttribute("authName", tdUser.getUsername());
-            session.setAttribute("authRole", tdUser.getIdJnsUser());
+            session.setAttribute("authRole", tdUser.getIdJnsUser().getIdJnsUser());
             System.out.println("data:"+tdUser);
             // redirect ke home 
             Executions.sendRedirect("home.zul");

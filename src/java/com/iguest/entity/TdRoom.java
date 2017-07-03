@@ -6,12 +6,16 @@
 package com.iguest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +29,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "TdRoom.findAll", query = "SELECT t FROM TdRoom t"),
     @NamedQuery(name = "TdRoom.findByIdRoom", query = "SELECT t FROM TdRoom t WHERE t.idRoom = :idRoom"),
-    @NamedQuery(name = "TdRoom.findByIdJnsRoom", query = "SELECT t FROM TdRoom t WHERE t.idJnsRoom = :idJnsRoom"),
     @NamedQuery(name = "TdRoom.findByNamaRoom", query = "SELECT t FROM TdRoom t WHERE t.namaRoom = :namaRoom"),
     @NamedQuery(name = "TdRoom.findByMaxGuest", query = "SELECT t FROM TdRoom t WHERE t.maxGuest = :maxGuest"),
     @NamedQuery(name = "TdRoom.findByPrice", query = "SELECT t FROM TdRoom t WHERE t.price = :price")})
@@ -37,8 +40,6 @@ public class TdRoom implements Serializable {
     @NotNull
     @Column(name = "ID_ROOM")
     private Integer idRoom;
-    @Column(name = "ID_JNS_ROOM")
-    private Integer idJnsRoom;
     @Size(max = 100)
     @Column(name = "NAMA_ROOM")
     private String namaRoom;
@@ -47,6 +48,11 @@ public class TdRoom implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRICE")
     private Float price;
+    @OneToMany(mappedBy = "idRoom")
+    private List<TtLogRoom> ttLogRoomList;
+    @JoinColumn(name = "ID_JNS_ROOM", referencedColumnName = "ID_JNS_ROOM")
+    @ManyToOne
+    private TrJnsRoom idJnsRoom;
 
     public TdRoom() {
     }
@@ -61,14 +67,6 @@ public class TdRoom implements Serializable {
 
     public void setIdRoom(Integer idRoom) {
         this.idRoom = idRoom;
-    }
-
-    public Integer getIdJnsRoom() {
-        return idJnsRoom;
-    }
-
-    public void setIdJnsRoom(Integer idJnsRoom) {
-        this.idJnsRoom = idJnsRoom;
     }
 
     public String getNamaRoom() {
@@ -93,6 +91,22 @@ public class TdRoom implements Serializable {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public List<TtLogRoom> getTtLogRoomList() {
+        return ttLogRoomList;
+    }
+
+    public void setTtLogRoomList(List<TtLogRoom> ttLogRoomList) {
+        this.ttLogRoomList = ttLogRoomList;
+    }
+
+    public TrJnsRoom getIdJnsRoom() {
+        return idJnsRoom;
+    }
+
+    public void setIdJnsRoom(TrJnsRoom idJnsRoom) {
+        this.idJnsRoom = idJnsRoom;
     }
 
     @Override

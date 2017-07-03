@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,8 +29,6 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "TtLogSistem.findAll", query = "SELECT t FROM TtLogSistem t"),
     @NamedQuery(name = "TtLogSistem.findByIdLogSistem", query = "SELECT t FROM TtLogSistem t WHERE t.idLogSistem = :idLogSistem"),
-    @NamedQuery(name = "TtLogSistem.findByIdUser", query = "SELECT t FROM TtLogSistem t WHERE t.idUser = :idUser"),
-    @NamedQuery(name = "TtLogSistem.findByIdJnsLogSistem", query = "SELECT t FROM TtLogSistem t WHERE t.idJnsLogSistem = :idJnsLogSistem"),
     @NamedQuery(name = "TtLogSistem.findByWaktuLog", query = "SELECT t FROM TtLogSistem t WHERE t.waktuLog = :waktuLog")})
 public class TtLogSistem implements Serializable {
 
@@ -38,13 +38,15 @@ public class TtLogSistem implements Serializable {
     @NotNull
     @Column(name = "ID_LOG_SISTEM")
     private Integer idLogSistem;
-    @Column(name = "ID_USER")
-    private Integer idUser;
-    @Column(name = "ID_JNS_LOG_SISTEM")
-    private Integer idJnsLogSistem;
     @Column(name = "WAKTU_LOG")
     @Temporal(TemporalType.TIMESTAMP)
     private Date waktuLog;
+    @JoinColumn(name = "ID_JNS_LOG_SISTEM", referencedColumnName = "ID_JNS_LOG_SISTEM")
+    @ManyToOne
+    private TrJnsLogSistem idJnsLogSistem;
+    @JoinColumn(name = "ID_USER", referencedColumnName = "ID_USER")
+    @ManyToOne
+    private TdUser idUser;
 
     public TtLogSistem() {
     }
@@ -61,28 +63,28 @@ public class TtLogSistem implements Serializable {
         this.idLogSistem = idLogSistem;
     }
 
-    public Integer getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
-    }
-
-    public Integer getIdJnsLogSistem() {
-        return idJnsLogSistem;
-    }
-
-    public void setIdJnsLogSistem(Integer idJnsLogSistem) {
-        this.idJnsLogSistem = idJnsLogSistem;
-    }
-
     public Date getWaktuLog() {
         return waktuLog;
     }
 
     public void setWaktuLog(Date waktuLog) {
         this.waktuLog = waktuLog;
+    }
+
+    public TrJnsLogSistem getIdJnsLogSistem() {
+        return idJnsLogSistem;
+    }
+
+    public void setIdJnsLogSistem(TrJnsLogSistem idJnsLogSistem) {
+        this.idJnsLogSistem = idJnsLogSistem;
+    }
+
+    public TdUser getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(TdUser idUser) {
+        this.idUser = idUser;
     }
 
     @Override

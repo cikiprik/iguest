@@ -6,12 +6,16 @@
 package com.iguest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +29,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "TdGuest.findAll", query = "SELECT t FROM TdGuest t"),
     @NamedQuery(name = "TdGuest.findByIdGuest", query = "SELECT t FROM TdGuest t WHERE t.idGuest = :idGuest"),
-    @NamedQuery(name = "TdGuest.findByIdJnsIdentitas", query = "SELECT t FROM TdGuest t WHERE t.idJnsIdentitas = :idJnsIdentitas"),
     @NamedQuery(name = "TdGuest.findByNama", query = "SELECT t FROM TdGuest t WHERE t.nama = :nama"),
     @NamedQuery(name = "TdGuest.findByNoIdentitas", query = "SELECT t FROM TdGuest t WHERE t.noIdentitas = :noIdentitas"),
     @NamedQuery(name = "TdGuest.findByAlamat", query = "SELECT t FROM TdGuest t WHERE t.alamat = :alamat"),
@@ -40,8 +43,6 @@ public class TdGuest implements Serializable {
     @NotNull
     @Column(name = "ID_GUEST")
     private Integer idGuest;
-    @Column(name = "ID_JNS_IDENTITAS")
-    private Integer idJnsIdentitas;
     @Size(max = 50)
     @Column(name = "NAMA")
     private String nama;
@@ -61,6 +62,11 @@ public class TdGuest implements Serializable {
     @Size(max = 50)
     @Column(name = "EMAIL")
     private String email;
+    @OneToMany(mappedBy = "idGuest")
+    private List<TtRoomRent> ttRoomRentList;
+    @JoinColumn(name = "ID_JNS_IDENTITAS", referencedColumnName = "ID_JNS_IDENTITAS")
+    @ManyToOne
+    private TrJnsIdentitas idJnsIdentitas;
 
     public TdGuest() {
     }
@@ -75,14 +81,6 @@ public class TdGuest implements Serializable {
 
     public void setIdGuest(Integer idGuest) {
         this.idGuest = idGuest;
-    }
-
-    public Integer getIdJnsIdentitas() {
-        return idJnsIdentitas;
-    }
-
-    public void setIdJnsIdentitas(Integer idJnsIdentitas) {
-        this.idJnsIdentitas = idJnsIdentitas;
     }
 
     public String getNama() {
@@ -131,6 +129,22 @@ public class TdGuest implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<TtRoomRent> getTtRoomRentList() {
+        return ttRoomRentList;
+    }
+
+    public void setTtRoomRentList(List<TtRoomRent> ttRoomRentList) {
+        this.ttRoomRentList = ttRoomRentList;
+    }
+
+    public TrJnsIdentitas getIdJnsIdentitas() {
+        return idJnsIdentitas;
+    }
+
+    public void setIdJnsIdentitas(TrJnsIdentitas idJnsIdentitas) {
+        this.idJnsIdentitas = idJnsIdentitas;
     }
 
     @Override

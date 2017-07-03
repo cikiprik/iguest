@@ -6,12 +6,18 @@
 package com.iguest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,8 +31,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "TdEmployee.findAll", query = "SELECT t FROM TdEmployee t"),
     @NamedQuery(name = "TdEmployee.findByIdEmployee", query = "SELECT t FROM TdEmployee t WHERE t.idEmployee = :idEmployee"),
-    @NamedQuery(name = "TdEmployee.findByIdJnsEmployee", query = "SELECT t FROM TdEmployee t WHERE t.idJnsEmployee = :idJnsEmployee"),
-    @NamedQuery(name = "TdEmployee.findByNama", query = "SELECT t FROM TdEmployee t WHERE t.nama = :nama"),
+    @NamedQuery(name = "TdEmployee.findByNama", query = "SELECT t FROM TdEmployee t WHERE UPPER(t.nama) = :nama"),
     @NamedQuery(name = "TdEmployee.findByAlamat", query = "SELECT t FROM TdEmployee t WHERE t.alamat = :alamat"),
     @NamedQuery(name = "TdEmployee.findByHp", query = "SELECT t FROM TdEmployee t WHERE t.hp = :hp"),
     @NamedQuery(name = "TdEmployee.findByEmail", query = "SELECT t FROM TdEmployee t WHERE t.email = :email")})
@@ -34,12 +39,11 @@ public class TdEmployee implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_EMPLOYEE")
     private Integer idEmployee;
-    @Column(name = "ID_JNS_EMPLOYEE")
-    private Integer idJnsEmployee;
     @Size(max = 50)
     @Column(name = "NAMA")
     private String nama;
@@ -53,6 +57,11 @@ public class TdEmployee implements Serializable {
     @Size(max = 50)
     @Column(name = "EMAIL")
     private String email;
+    @JoinColumn(name = "ID_JNS_EMPLOYEE", referencedColumnName = "ID_JNS_EMPLOYEE")
+    @ManyToOne
+    private TrJnsEmployee idJnsEmployee;
+    @OneToMany(mappedBy = "idEmployee")
+    private List<TdUser> tdUserList;
 
     public TdEmployee() {
     }
@@ -67,14 +76,6 @@ public class TdEmployee implements Serializable {
 
     public void setIdEmployee(Integer idEmployee) {
         this.idEmployee = idEmployee;
-    }
-
-    public Integer getIdJnsEmployee() {
-        return idJnsEmployee;
-    }
-
-    public void setIdJnsEmployee(Integer idJnsEmployee) {
-        this.idJnsEmployee = idJnsEmployee;
     }
 
     public String getNama() {
@@ -107,6 +108,22 @@ public class TdEmployee implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public TrJnsEmployee getIdJnsEmployee() {
+        return idJnsEmployee;
+    }
+
+    public void setIdJnsEmployee(TrJnsEmployee idJnsEmployee) {
+        this.idJnsEmployee = idJnsEmployee;
+    }
+
+    public List<TdUser> getTdUserList() {
+        return tdUserList;
+    }
+
+    public void setTdUserList(List<TdUser> tdUserList) {
+        this.tdUserList = tdUserList;
     }
 
     @Override

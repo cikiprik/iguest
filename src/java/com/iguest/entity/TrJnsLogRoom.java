@@ -6,12 +6,14 @@
 package com.iguest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,6 +39,8 @@ public class TrJnsLogRoom implements Serializable {
     @Size(max = 50)
     @Column(name = "JNS_LOG_ROOM")
     private String jnsLogRoom;
+    @OneToMany(mappedBy = "idJnsLogRoom")
+    private List<TtLogRoom> ttLogRoomList;
 
     public TrJnsLogRoom() {
     }
@@ -59,6 +63,14 @@ public class TrJnsLogRoom implements Serializable {
 
     public void setJnsLogRoom(String jnsLogRoom) {
         this.jnsLogRoom = jnsLogRoom;
+    }
+
+    public List<TtLogRoom> getTtLogRoomList() {
+        return ttLogRoomList;
+    }
+
+    public void setTtLogRoomList(List<TtLogRoom> ttLogRoomList) {
+        this.ttLogRoomList = ttLogRoomList;
     }
 
     @Override

@@ -7,12 +7,16 @@ package com.iguest.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,8 +31,6 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "TtPayment.findAll", query = "SELECT t FROM TtPayment t"),
     @NamedQuery(name = "TtPayment.findByIdPayment", query = "SELECT t FROM TtPayment t WHERE t.idPayment = :idPayment"),
-    @NamedQuery(name = "TtPayment.findByIdJnsPayment", query = "SELECT t FROM TtPayment t WHERE t.idJnsPayment = :idJnsPayment"),
-    @NamedQuery(name = "TtPayment.findByIdPaymentStatus", query = "SELECT t FROM TtPayment t WHERE t.idPaymentStatus = :idPaymentStatus"),
     @NamedQuery(name = "TtPayment.findByTotal", query = "SELECT t FROM TtPayment t WHERE t.total = :total"),
     @NamedQuery(name = "TtPayment.findByWaktuPayment", query = "SELECT t FROM TtPayment t WHERE t.waktuPayment = :waktuPayment"),
     @NamedQuery(name = "TtPayment.findByDisc", query = "SELECT t FROM TtPayment t WHERE t.disc = :disc")})
@@ -40,10 +42,6 @@ public class TtPayment implements Serializable {
     @NotNull
     @Column(name = "ID_PAYMENT")
     private Integer idPayment;
-    @Column(name = "ID_JNS_PAYMENT")
-    private Integer idJnsPayment;
-    @Column(name = "ID_PAYMENT_STATUS")
-    private Integer idPaymentStatus;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TOTAL")
     private Float total;
@@ -52,6 +50,14 @@ public class TtPayment implements Serializable {
     private Date waktuPayment;
     @Column(name = "DISC")
     private Float disc;
+    @JoinColumn(name = "ID_JNS_PAYMENT", referencedColumnName = "ID_JNS_PAYMENT")
+    @ManyToOne
+    private TrJnsPayment idJnsPayment;
+    @JoinColumn(name = "ID_PAYMENT_STATUS", referencedColumnName = "ID_PAYMENT_STATUS")
+    @ManyToOne
+    private TrPaymentStatus idPaymentStatus;
+    @OneToMany(mappedBy = "idPayment")
+    private List<TtRoomRent> ttRoomRentList;
 
     public TtPayment() {
     }
@@ -66,22 +72,6 @@ public class TtPayment implements Serializable {
 
     public void setIdPayment(Integer idPayment) {
         this.idPayment = idPayment;
-    }
-
-    public Integer getIdJnsPayment() {
-        return idJnsPayment;
-    }
-
-    public void setIdJnsPayment(Integer idJnsPayment) {
-        this.idJnsPayment = idJnsPayment;
-    }
-
-    public Integer getIdPaymentStatus() {
-        return idPaymentStatus;
-    }
-
-    public void setIdPaymentStatus(Integer idPaymentStatus) {
-        this.idPaymentStatus = idPaymentStatus;
     }
 
     public Float getTotal() {
@@ -106,6 +96,30 @@ public class TtPayment implements Serializable {
 
     public void setDisc(Float disc) {
         this.disc = disc;
+    }
+
+    public TrJnsPayment getIdJnsPayment() {
+        return idJnsPayment;
+    }
+
+    public void setIdJnsPayment(TrJnsPayment idJnsPayment) {
+        this.idJnsPayment = idJnsPayment;
+    }
+
+    public TrPaymentStatus getIdPaymentStatus() {
+        return idPaymentStatus;
+    }
+
+    public void setIdPaymentStatus(TrPaymentStatus idPaymentStatus) {
+        this.idPaymentStatus = idPaymentStatus;
+    }
+
+    public List<TtRoomRent> getTtRoomRentList() {
+        return ttRoomRentList;
+    }
+
+    public void setTtRoomRentList(List<TtRoomRent> ttRoomRentList) {
+        this.ttRoomRentList = ttRoomRentList;
     }
 
     @Override

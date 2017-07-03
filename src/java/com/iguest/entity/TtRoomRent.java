@@ -7,12 +7,16 @@ package com.iguest.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,8 +31,6 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "TtRoomRent.findAll", query = "SELECT t FROM TtRoomRent t"),
     @NamedQuery(name = "TtRoomRent.findByIdRoomRent", query = "SELECT t FROM TtRoomRent t WHERE t.idRoomRent = :idRoomRent"),
-    @NamedQuery(name = "TtRoomRent.findByIdGuest", query = "SELECT t FROM TtRoomRent t WHERE t.idGuest = :idGuest"),
-    @NamedQuery(name = "TtRoomRent.findByIdPayment", query = "SELECT t FROM TtRoomRent t WHERE t.idPayment = :idPayment"),
     @NamedQuery(name = "TtRoomRent.findByCheckin", query = "SELECT t FROM TtRoomRent t WHERE t.checkin = :checkin"),
     @NamedQuery(name = "TtRoomRent.findByCheckout", query = "SELECT t FROM TtRoomRent t WHERE t.checkout = :checkout"),
     @NamedQuery(name = "TtRoomRent.findByWaktuRekam", query = "SELECT t FROM TtRoomRent t WHERE t.waktuRekam = :waktuRekam")})
@@ -40,10 +42,6 @@ public class TtRoomRent implements Serializable {
     @NotNull
     @Column(name = "ID_ROOM_RENT")
     private Integer idRoomRent;
-    @Column(name = "ID_GUEST")
-    private Integer idGuest;
-    @Column(name = "ID_PAYMENT")
-    private Integer idPayment;
     @Column(name = "CHECKIN")
     @Temporal(TemporalType.TIMESTAMP)
     private Date checkin;
@@ -53,6 +51,14 @@ public class TtRoomRent implements Serializable {
     @Column(name = "WAKTU_REKAM")
     @Temporal(TemporalType.TIMESTAMP)
     private Date waktuRekam;
+    @OneToMany(mappedBy = "idRoomRent")
+    private List<TtLogRoom> ttLogRoomList;
+    @JoinColumn(name = "ID_GUEST", referencedColumnName = "ID_GUEST")
+    @ManyToOne
+    private TdGuest idGuest;
+    @JoinColumn(name = "ID_PAYMENT", referencedColumnName = "ID_PAYMENT")
+    @ManyToOne
+    private TtPayment idPayment;
 
     public TtRoomRent() {
     }
@@ -67,22 +73,6 @@ public class TtRoomRent implements Serializable {
 
     public void setIdRoomRent(Integer idRoomRent) {
         this.idRoomRent = idRoomRent;
-    }
-
-    public Integer getIdGuest() {
-        return idGuest;
-    }
-
-    public void setIdGuest(Integer idGuest) {
-        this.idGuest = idGuest;
-    }
-
-    public Integer getIdPayment() {
-        return idPayment;
-    }
-
-    public void setIdPayment(Integer idPayment) {
-        this.idPayment = idPayment;
     }
 
     public Date getCheckin() {
@@ -107,6 +97,30 @@ public class TtRoomRent implements Serializable {
 
     public void setWaktuRekam(Date waktuRekam) {
         this.waktuRekam = waktuRekam;
+    }
+
+    public List<TtLogRoom> getTtLogRoomList() {
+        return ttLogRoomList;
+    }
+
+    public void setTtLogRoomList(List<TtLogRoom> ttLogRoomList) {
+        this.ttLogRoomList = ttLogRoomList;
+    }
+
+    public TdGuest getIdGuest() {
+        return idGuest;
+    }
+
+    public void setIdGuest(TdGuest idGuest) {
+        this.idGuest = idGuest;
+    }
+
+    public TtPayment getIdPayment() {
+        return idPayment;
+    }
+
+    public void setIdPayment(TtPayment idPayment) {
+        this.idPayment = idPayment;
     }
 
     @Override

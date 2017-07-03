@@ -6,12 +6,14 @@
 package com.iguest.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,6 +39,8 @@ public class TrJnsUser implements Serializable {
     @Size(max = 50)
     @Column(name = "JNS_USER")
     private String jnsUser;
+    @OneToMany(mappedBy = "idJnsUser")
+    private List<TdUser> tdUserList;
 
     public TrJnsUser() {
     }
@@ -59,6 +63,14 @@ public class TrJnsUser implements Serializable {
 
     public void setJnsUser(String jnsUser) {
         this.jnsUser = jnsUser;
+    }
+
+    public List<TdUser> getTdUserList() {
+        return tdUserList;
+    }
+
+    public void setTdUserList(List<TdUser> tdUserList) {
+        this.tdUserList = tdUserList;
     }
 
     @Override

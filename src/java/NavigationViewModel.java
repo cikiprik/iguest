@@ -50,10 +50,9 @@ public class NavigationViewModel {
         addPage("iGuest", "About Us", "/home/about_us.zul");
         if (role == 1 || role == 2) {
             // super user & manager
-            addPage("iGuest", "User Data", "/home/menu.zul");
+            addPage("iGuest", "User Data", "/data/user.zul");
             addPage("iGuest", "Rooms Data", "/home/faq.zul");
-            addPage("iGuest", "Employee Data", "/home/press.zul");
-            addPage("iGuest", "Guest Data", "/home/press.zul");
+            addPage("iGuest", "Employee Data", "/data/employee.zul");
 
             addPage("Room", "Reserve", "/customers/customers.zul", "active");
             addPage("Room", "Check in", "/customers/customers.zul", "active");
@@ -73,7 +72,6 @@ public class NavigationViewModel {
         if (role == 3) {
             // front office
 
-            addPage("iGuest", "Guest Data", "/home/press.zul");
 
             addPage("Room", "Reserve", "/customers/customers.zul", "active");
             addPage("Room", "Check in", "/customers/customers.zul", "active");
