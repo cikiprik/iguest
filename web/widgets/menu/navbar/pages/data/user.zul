@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    
+    <grid width="99%">
+        <columns>
+            <column label="" width="14%"/>
+            <column label="" width="34%"/>
+            <column label="" width="5%"/>
+            <column label="" width="14%"/>
+            <column label="" width="34%"/>
+        </columns>
+        <rows>
+            <row>
+                <label>Employee</label>	
+                <hbox>
+                    <bandbox  />
+                    <label />
+                </hbox>
+               
+                <label />
+                <label>Jenis User</label>   
+                <combobox></combobox>
+            </row>
+            <row>
+                <label>Username</label>	
+                <textbox  />
+                <label />
+                <label>Password</label>   
+                <textbox />
+            </row>
+            <row>
+                <label>Status</label>	
+                <combobox >
+                    <comboitem value="1" label="Aktif"/>
+                    <comboitem value="0" label="Non Aktif"/>
+                </combobox>
+                <label/>                
+                <label/>
+
+                <hbox>
+                    <button label="Tambah" iconSclass="z-icon-plus " />
+                    <button label="Simpan" iconSclass="z-icon-edit "/>
+                    <button label="Hapus" iconSclass="z-icon-ban "/>
+                </hbox>
+                        
+                        
+                            
+            </row>
+        </rows>
+    </grid>
+    
+    <listbox id="lbUser" width="99%" mold="paging" pageSize="10">
+        <listhead>
+            <listheader label="Employee"/>
+            <listheader label="Username"/>
+            <listheader label="Jenis User"/>
+            <listheader label="Status"/>
+        </listhead>
+        <listitem>
+            <listcell label=""/>
+            <listcell label=""/>            
+            <listcell label=""/>
+            <listcell label=""/>
+        </listitem>
+						
+    </listbox>
+</zk>
