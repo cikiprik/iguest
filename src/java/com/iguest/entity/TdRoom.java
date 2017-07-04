@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,13 +31,14 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "TdRoom.findAll", query = "SELECT t FROM TdRoom t"),
     @NamedQuery(name = "TdRoom.findByIdRoom", query = "SELECT t FROM TdRoom t WHERE t.idRoom = :idRoom"),
-    @NamedQuery(name = "TdRoom.findByNamaRoom", query = "SELECT t FROM TdRoom t WHERE t.namaRoom = :namaRoom"),
-    @NamedQuery(name = "TdRoom.findByMaxGuest", query = "SELECT t FROM TdRoom t WHERE t.maxGuest = :maxGuest"),
-    @NamedQuery(name = "TdRoom.findByPrice", query = "SELECT t FROM TdRoom t WHERE t.price = :price")})
+    @NamedQuery(name = "TdRoom.findByNamaRoom", query = "SELECT t FROM TdRoom t WHERE UPPER(t.namaRoom) = :namaRoom"),
+    @NamedQuery(name = "TdRoom.findByMaxGuest", query = "SELECT t FROM TdRoom t WHERE t.maxGuest = :maxGuest")})
 public class TdRoom implements Serializable {
 
+ 
     private static final long serialVersionUID = 1L;
     @Id
+     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_ROOM")
@@ -46,13 +49,12 @@ public class TdRoom implements Serializable {
     @Column(name = "MAX_GUEST")
     private Integer maxGuest;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "PRICE")
-    private Float price;
-    @OneToMany(mappedBy = "idRoom")
-    private List<TtLogRoom> ttLogRoomList;
     @JoinColumn(name = "ID_JNS_ROOM", referencedColumnName = "ID_JNS_ROOM")
     @ManyToOne
     private TrJnsRoom idJnsRoom;
+       @OneToMany(mappedBy = "idRoom")
+    private List<TtRoomRate> ttRoomRateList;
+
 
     public TdRoom() {
     }
@@ -85,22 +87,6 @@ public class TdRoom implements Serializable {
         this.maxGuest = maxGuest;
     }
 
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public List<TtLogRoom> getTtLogRoomList() {
-        return ttLogRoomList;
-    }
-
-    public void setTtLogRoomList(List<TtLogRoom> ttLogRoomList) {
-        this.ttLogRoomList = ttLogRoomList;
-    }
-
     public TrJnsRoom getIdJnsRoom() {
         return idJnsRoom;
     }
@@ -109,6 +95,14 @@ public class TdRoom implements Serializable {
         this.idJnsRoom = idJnsRoom;
     }
 
+     public List<TtRoomRate> getTtRoomRateList() {
+        return ttRoomRateList;
+    }
+
+    public void setTtRoomRateList(List<TtRoomRate> ttRoomRateList) {
+        this.ttRoomRateList = ttRoomRateList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,5 +127,7 @@ public class TdRoom implements Serializable {
     public String toString() {
         return "com.iguest.entity.TdRoom[ idRoom=" + idRoom + " ]";
     }
+
+   
     
 }

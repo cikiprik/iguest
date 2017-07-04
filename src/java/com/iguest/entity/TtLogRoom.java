@@ -32,6 +32,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "TtLogRoom.findByWaktuLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.waktuLogRoom = :waktuLogRoom")})
 public class TtLogRoom implements Serializable {
 
+  
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -44,12 +45,14 @@ public class TtLogRoom implements Serializable {
     @JoinColumn(name = "ID_JNS_LOG_ROOM", referencedColumnName = "ID_JNS_LOG_ROOM")
     @ManyToOne
     private TrJnsLogRoom idJnsLogRoom;
-    @JoinColumn(name = "ID_ROOM", referencedColumnName = "ID_ROOM")
-    @ManyToOne
-    private TdRoom idRoom;
+    
     @JoinColumn(name = "ID_ROOM_RENT", referencedColumnName = "ID_ROOM_RENT")
     @ManyToOne
     private TtRoomRent idRoomRent;
+      @JoinColumn(name = "ID_ROOM_RATE", referencedColumnName = "ID_ROOM_RATE")
+    @ManyToOne
+    private TtRoomRate idRoomRate;
+
 
     public TtLogRoom() {
     }
@@ -82,13 +85,7 @@ public class TtLogRoom implements Serializable {
         this.idJnsLogRoom = idJnsLogRoom;
     }
 
-    public TdRoom getIdRoom() {
-        return idRoom;
-    }
-
-    public void setIdRoom(TdRoom idRoom) {
-        this.idRoom = idRoom;
-    }
+   
 
     public TtRoomRent getIdRoomRent() {
         return idRoomRent;
@@ -96,6 +93,14 @@ public class TtLogRoom implements Serializable {
 
     public void setIdRoomRent(TtRoomRent idRoomRent) {
         this.idRoomRent = idRoomRent;
+    }
+    
+      public TtRoomRate getIdRoomRate() {
+        return idRoomRate;
+    }
+
+    public void setIdRoomRate(TtRoomRate idRoomRate) {
+        this.idRoomRate = idRoomRate;
     }
 
     @Override
@@ -122,5 +127,7 @@ public class TtLogRoom implements Serializable {
     public String toString() {
         return "com.iguest.entity.TtLogRoom[ idLogRoom=" + idLogRoom + " ]";
     }
+
+  
     
 }

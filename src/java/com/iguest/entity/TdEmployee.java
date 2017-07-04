@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "TdEmployee.findAll", query = "SELECT t FROM TdEmployee t"),
     @NamedQuery(name = "TdEmployee.findByIdEmployee", query = "SELECT t FROM TdEmployee t WHERE t.idEmployee = :idEmployee"),
     @NamedQuery(name = "TdEmployee.findByNama", query = "SELECT t FROM TdEmployee t WHERE UPPER(t.nama) = :nama"),
+    @NamedQuery(name = "TdEmployee.findByNamaLike", query = "SELECT t FROM TdEmployee t WHERE UPPER(t.nama) like :nama"),
     @NamedQuery(name = "TdEmployee.findByAlamat", query = "SELECT t FROM TdEmployee t WHERE t.alamat = :alamat"),
     @NamedQuery(name = "TdEmployee.findByHp", query = "SELECT t FROM TdEmployee t WHERE t.hp = :hp"),
     @NamedQuery(name = "TdEmployee.findByEmail", query = "SELECT t FROM TdEmployee t WHERE t.email = :email")})

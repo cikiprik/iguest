@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,12 +35,14 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "TdUser.findByIdJnsUser", query = "SELECT t FROM TdUser t WHERE t.idJnsUser = :idJnsUser"),
     @NamedQuery(name = "TdUser.findByFlagAktif", query = "SELECT t FROM TdUser t WHERE t.flagAktif = :flagAktif"),
     @NamedQuery(name = "TdUser.findByUsernameAndPass", query = "SELECT t FROM TdUser t WHERE t.username = :username and t.password = :password "),
-    @NamedQuery(name = "TdUser.findByUsername", query = "SELECT t FROM TdUser t WHERE t.username = :username"),
+    @NamedQuery(name = "TdUser.findByUsername", query = "SELECT t FROM TdUser t WHERE UPPER(t.username) = :username"),
+    @NamedQuery(name = "TdUser.findByNamaLike", query = "SELECT t FROM TdUser t WHERE UPPER(t.username) like :usernama"),
     @NamedQuery(name = "TdUser.findByPassword", query = "SELECT t FROM TdUser t WHERE t.password = :password")})
 public class TdUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_USER")

@@ -51,7 +51,7 @@ public class NavigationViewModel {
         if (role == 1 || role == 2) {
             // super user & manager
             addPage("iGuest", "User Data", "/data/user.zul");
-            addPage("iGuest", "Rooms Data", "/home/faq.zul");
+            addPage("iGuest", "Rooms Data", "/data/rooms.zul");
             addPage("iGuest", "Employee Data", "/data/employee.zul");
 
             addPage("Room", "Reserve", "/customers/customers.zul", "active");

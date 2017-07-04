@@ -134,6 +134,7 @@ public class Employee extends SelectorComposer<Component> {
                 // hapus
                 loadBean.hapusObject(employee);
                 loadList();
+                clear();
             }
         } else {
             // belum dipilih
