@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window apply="com.iguest.pageCtl.Rooms">
+        <grid width="99%">
+            <columns>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+                <column label="" width="5%"/>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label>Jenis Room</label>	
+                    <combobox id="cmbJnsRoom"></combobox>
+               
+                    <label />
+                    <label>Nama Room</label>   
+                    <textbox id="txtNamaRoom"></textbox>
+                </row>
+                <row>
+                    <label>Max Guest</label>	
+                    <textbox id="txtMax" />
+                    <label />
+                    <label>Rate</label>   
+                    <hbox>
+                        <textbox id="txtPrice"/>
+                        <datebox id="dbxRate"/>
+                    </hbox>
+                    
+                </row>
+                <row>
+                     <label/>   	
+                    <label/>   
+                    <label/>                
+                    <label/>
+
+                    <hbox>
+                        <button id="btnTambah" label="Tambah" iconSclass="z-icon-plus " />
+                        <button id="btnSimpan" label="Simpan" iconSclass="z-icon-edit "/>
+                        <button id="btnHapus" label="Hapus" iconSclass="z-icon-ban "/>
+                    </hbox>
+                        
+                        
+                            
+                </row>
+            </rows>
+        </grid>
+    
+        <listbox id="lbData" width="99%" mold="paging" pageSize="10">
+            <listhead>
+                <listheader label="Jns Room"/>
+                <listheader label="Nama Room"/>
+                <listheader label="Max Guest"/>
+                <listheader label="Rate"/>
+            </listhead>
+            <listitem>
+                <listcell label=""/>
+                <listcell label=""/>            
+                <listcell label=""/>
+                <listcell label=""/>
+            </listitem>
+						
+        </listbox>
+    </window>
+    
+</zk>
