@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,6 +30,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "TT_LOG_ROOM", catalog = "db_iguest", schema = "")
 @NamedQueries({
     @NamedQuery(name = "TtLogRoom.findAll", query = "SELECT t FROM TtLogRoom t"),
+    @NamedQuery(name = "TtLogRoom.findByIdRoomRent", query = "SELECT t FROM TtLogRoom t WHERE t.idRoomRent = :idRoomRent and t.idJnsLogRoom = :idJnsLog order by t.idLogRoom desc"),
     @NamedQuery(name = "TtLogRoom.findByIdLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.idLogRoom = :idLogRoom"),
     @NamedQuery(name = "TtLogRoom.findByWaktuLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.waktuLogRoom = :waktuLogRoom")})
 public class TtLogRoom implements Serializable {
@@ -35,6 +38,7 @@ public class TtLogRoom implements Serializable {
   
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_LOG_ROOM")

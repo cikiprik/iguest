@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "TdGuest.findAll", query = "SELECT t FROM TdGuest t"),
     @NamedQuery(name = "TdGuest.findByIdGuest", query = "SELECT t FROM TdGuest t WHERE t.idGuest = :idGuest"),
     @NamedQuery(name = "TdGuest.findByNama", query = "SELECT t FROM TdGuest t WHERE t.nama = :nama"),
+    @NamedQuery(name = "TdGuest.findByNamaLike", query = "SELECT t FROM TdGuest t WHERE UPPER(t.nama) like :nama"),
     @NamedQuery(name = "TdGuest.findByNoIdentitas", query = "SELECT t FROM TdGuest t WHERE t.noIdentitas = :noIdentitas"),
     @NamedQuery(name = "TdGuest.findByAlamat", query = "SELECT t FROM TdGuest t WHERE t.alamat = :alamat"),
     @NamedQuery(name = "TdGuest.findByWargaNegara", query = "SELECT t FROM TdGuest t WHERE t.wargaNegara = :wargaNegara"),
@@ -39,6 +42,7 @@ public class TdGuest implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_GUEST")

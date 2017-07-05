@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "TdRoom.findAll", query = "SELECT t FROM TdRoom t"),
     @NamedQuery(name = "TdRoom.findByIdRoom", query = "SELECT t FROM TdRoom t WHERE t.idRoom = :idRoom"),
     @NamedQuery(name = "TdRoom.findByNamaRoom", query = "SELECT t FROM TdRoom t WHERE UPPER(t.namaRoom) = :namaRoom"),
+    @NamedQuery(name = "TdRoom.findByNamaLike", query = "SELECT t FROM TdRoom t WHERE UPPER(t.namaRoom) like :nama"),
     @NamedQuery(name = "TdRoom.findByMaxGuest", query = "SELECT t FROM TdRoom t WHERE t.maxGuest = :maxGuest")})
 public class TdRoom implements Serializable {
 

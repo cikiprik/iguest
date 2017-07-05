@@ -6,12 +6,17 @@
 package com.iguest.service;
 
 import com.iguest.entity.TdEmployee;
+import com.iguest.entity.TdGuest;
 import com.iguest.entity.TdRoom;
 import com.iguest.entity.TdUser;
 import com.iguest.entity.TrJnsEmployee;
+import com.iguest.entity.TrJnsIdentitas;
+import com.iguest.entity.TrJnsLogRoom;
 import com.iguest.entity.TrJnsRoom;
 import com.iguest.entity.TrJnsUser;
+import com.iguest.entity.TtLogRoom;
 import com.iguest.entity.TtRoomRate;
+import com.iguest.entity.TtRoomRent;
 import com.iguest.utils.Enkripsi;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +44,10 @@ public class LoadDataBean {
        return (List<TrJnsUser>) em.createNamedQuery("TrJnsUser.findAll").getResultList();
         
     }
+    public List<TrJnsIdentitas> listJnsIdentitas (){
+       return (List<TrJnsIdentitas>) em.createNamedQuery("TrJnsIdentitas.findAll").getResultList();
+        
+    }
     
     public List<TrJnsRoom> listJnsRoom (){
        return (List<TrJnsRoom>) em.createNamedQuery("TrJnsRoom.findAll").getResultList();
@@ -55,12 +64,34 @@ public class LoadDataBean {
         
     }
     
+    public List<TdGuest> listGuest (){
+       return (List<TdGuest>) em.createNamedQuery("TdGuest.findAll").getResultList();
+        
+    }
+    
+    public List<TtRoomRent> listRoomRent (){
+        List<TtRoomRent> data = em.createNamedQuery("TtRoomRent.findAll").getResultList();
+       return data;
+      
+        
+    }
+    
     public List<TdRoom> listRoom (){
        return (List<TdRoom>) em.createNamedQuery("TdRoom.findAll").getResultList();
         
     }
     public List<TdEmployee> listEmployeeName (String o){
        return (List<TdEmployee>) em.createNamedQuery("TdEmployee.findByNamaLike").setParameter("nama", "%" + o.toUpperCase() + "%").getResultList();
+        
+    }
+    
+    public List<TdGuest> listGuestName (String o){
+       return (List<TdGuest>) em.createNamedQuery("TdGuest.findByNamaLike").setParameter("nama", "%" + o.toUpperCase() + "%").getResultList();
+        
+    }
+    
+    public List<TdRoom> listRoomName (String o){
+       return (List<TdRoom>) em.createNamedQuery("TdRoom.findByNamaLike").setParameter("nama", "%" + o.toUpperCase() + "%").getResultList();
         
     }
     
@@ -77,6 +108,28 @@ public class LoadDataBean {
     public TdUser findUser (String o) {
         try {
             return (TdUser) em.createNamedQuery("TdUser.findByUsername").setParameter("username", o.toUpperCase()).setFirstResult(0).setMaxResults(1).getSingleResult();
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
+        
+        
+    }
+    
+    public TdGuest findGuest (String o) {
+        try {
+            return (TdGuest) em.createNamedQuery("TdGuest.findByNoIdentitas").setParameter("noIdentitas", o).setFirstResult(0).setMaxResults(1).getSingleResult();
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
+        
+        
+    }
+    
+    public TtLogRoom findLogRoom (TtRoomRent data, TrJnsLogRoom log) {
+        try {
+            return (TtLogRoom) em.createNamedQuery("TtLogRoom.findByIdRoomRent")
+                    .setParameter("idJnsLog",log)
+                    .setParameter("idRoomRent",data).setFirstResult(0).setMaxResults(1).getSingleResult();
         } catch (javax.persistence.NoResultException e) {
             return null;
         }
