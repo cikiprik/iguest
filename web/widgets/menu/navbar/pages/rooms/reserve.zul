@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window apply="com.iguest.pageCtl.Reserve">
+        <grid width="99%">
+            <columns>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+                <column label="" width="5%"/>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label>Guest</label>	
+                    <hbox>
+                        <bandbox id="bd" mold="rounded" autodrop="true">
+                            <bandpopup>
+                                <listbox id="listBdGuest" height="250px" width="300px" mold="paging" autopaging="true"
+                                         onSelect="bd.value=self.selectedItem.label; bd.close();">
+                                    <listhead>
+                                        <listheader label="Guest List" />
+                                    </listhead>
+                                    
+                                </listbox>
+                            </bandpopup>
+                        </bandbox>
+                        <button id="btnBaru" label="Baru" iconSclass="z-icon-bell "/>
+                    </hbox>
+               
+                    <label />
+                    <label>Checkin</label>   
+                    <datebox id="dbxCheckin" ></datebox>
+                </row>
+                <row>
+                    <label>Room</label>
+                    <hbox>
+                        <bandbox id="bdRoom" mold="rounded" autodrop="true">
+                            <bandpopup>
+                                <listbox id="listBdRoom" height="250px" width="300px" mold="paging" autopaging="true"
+                                         onSelect="bdRoom.value=self.selectedItem.label; bdRoom.close();">
+                                    <listhead>
+                                        <listheader label="Room List" />
+                                    </listhead>
+                                    
+                                </listbox>
+                            </bandpopup>
+                        </bandbox>
+                        <label id="txtRate" />
+                    </hbox>	
+                    
+                    <label />
+                    <label>Checkout</label>   
+                   <datebox id="dbxCheckout" ></datebox>
+                    
+                </row>
+                <row>
+                    <label>Description</label>	
+                    <label id="lblKet" />
+                    <label/>                
+                    <label/>
+
+                    <hbox>
+                        <button id="btnTambah" label="Tambah" iconSclass="z-icon-plus " />
+                        <button id="btnSimpan" label="Simpan" iconSclass="z-icon-edit "/>
+                        <button id="btnHapus" label="Hapus" iconSclass="z-icon-ban "/>
+                    </hbox>
+                        
+                        
+                            
+                </row>
+            </rows>
+        </grid>
+    
+        <listbox id="lbData" width="99%" mold="paging" pageSize="10">
+            <listhead>
+                <listheader label="Guest"/>
+                <listheader label="Room"/>
+                <listheader label="Checkin"/>
+                <listheader label="Checkout"/>
+            </listhead>
+            <listitem>
+                <listcell label=""/>
+                <listcell label=""/>            
+                <listcell label=""/>
+                <listcell label=""/>
+            </listitem>
+						
+        </listbox>
+         
+        <calendars id="calendars" firstDayOfWeek="Sunday" width="99%" height="400px"
+                timeZone="Jakarta=GMT+7" mold="month"/>
+        <!-- Control Menu -->
+        
+                <button id="prev" iconSclass="z-icon-angle-left "/>
+                <button id="next" iconSclass="z-icon-angle-right "/>
+         
+    </window>
+    
+</zk>

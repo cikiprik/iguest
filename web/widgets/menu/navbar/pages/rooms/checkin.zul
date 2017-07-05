@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <calendars firstDayOfWeek="Monday" mold="default" timeZone="Jakarta=GMT+7" width="99%" height="600px"/>
+</zk>

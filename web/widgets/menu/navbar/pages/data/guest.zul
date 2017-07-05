@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window apply="com.iguest.pageCtl.Guest">
+        <grid width="99%">
+            <columns>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+                <column label="" width="5%"/>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label>Jenis Identitas</label>	
+                    <combobox id="cmbJnsIdentitas"></combobox>
+               
+                    <label />
+                    <label>Nama</label>   
+                    <textbox id="txtNama"></textbox>
+                </row>
+                <row>
+                    <label>Nomer Identitas</label>	
+                    <textbox id="txtNo" />
+                    <label />
+                    <label>Alamat</label>   
+                        <textbox id="txtAlamat" multiline="true" height="40px" width="60%" />
+                    
+                </row>
+                <row>
+                    <label>Warga Negara</label>	
+                    <textbox id="txtNegara" />
+                    <label />
+                    <label>Kontak</label>   
+                        <textbox id="txtKontak" />
+                    
+                </row>
+                <row>
+                    <label>email</label>	
+                    <textbox id="txtEmail"/>
+                    <label/>                
+                    <label/>
+
+                    <hbox>
+                        <button id="btnTambah" label="Tambah" iconSclass="z-icon-plus " />
+                        <button id="btnSimpan" label="Simpan" iconSclass="z-icon-edit "/>
+                        <button id="btnHapus" label="Hapus" iconSclass="z-icon-ban "/>
+                    </hbox>
+                        
+                        
+                            
+                </row>
+            </rows>
+        </grid>
+    
+        <listbox id="lbData" width="99%" mold="paging" pageSize="10">
+            <listhead>
+                <listheader label="Nama"/>
+                <listheader label="Nomer Identitas"/>
+                <listheader label="Jenis Identitas"/>
+                <listheader label="Kontak"/>
+                <listheader label="Email"/>
+            </listhead>
+            <listitem>
+                <listcell label=""/>
+                <listcell label=""/>            
+                <listcell label=""/>
+                <listcell label=""/>
+                 <listcell label=""/>
+            </listitem>
+						
+        </listbox>
+    </window>
+    
+</zk>
