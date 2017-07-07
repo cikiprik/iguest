@@ -76,6 +76,32 @@ public class LoadDataBean {
         
     }
     
+    public List<TtRoomRent> listRoomRentAndMaxLog (TrJnsLogRoom log){
+        List<TtRoomRent> data = em.createNamedQuery("TtRoomRent.findAll").getResultList();
+       return data;
+      
+        
+    }
+    
+    
+    public List<TtRoomRent> listRoomRentByNama (String nama){
+        List<TtRoomRent> data = em.createNamedQuery("TtRoomRent.findByNama")
+                .setParameter("nama", "%" + nama.toUpperCase() + "%")
+                .getResultList();
+       return data;
+      
+        
+    }
+    
+    public List<TtRoomRent> listRoomRentByID (String id){
+        List<TtRoomRent> data = em.createNamedQuery("TtRoomRent.findByID")
+                .setParameter("identitas", "%" + id.toUpperCase() + "%")
+                .getResultList();
+       return data;
+      
+        
+    }
+    
     public List<TdRoom> listRoom (){
        return (List<TdRoom>) em.createNamedQuery("TdRoom.findAll").getResultList();
         
@@ -129,6 +155,17 @@ public class LoadDataBean {
         try {
             return (TtLogRoom) em.createNamedQuery("TtLogRoom.findByIdRoomRent")
                     .setParameter("idJnsLog",log)
+                    .setParameter("idRoomRent",data).setFirstResult(0).setMaxResults(1).getSingleResult();
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
+        
+        
+    }
+    
+    public TtLogRoom findLogRoomMax (TtRoomRent data) {
+        try {
+            return (TtLogRoom) em.createNamedQuery("TtLogRoom.findByIdRoomRentMax")
                     .setParameter("idRoomRent",data).setFirstResult(0).setMaxResults(1).getSingleResult();
         } catch (javax.persistence.NoResultException e) {
             return null;

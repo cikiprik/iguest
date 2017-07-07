@@ -20,6 +20,7 @@ import com.iguest.utils.Enkripsi;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import org.zkoss.calendar.Calendars;
@@ -67,7 +68,7 @@ public class Reserve extends SelectorComposer<Component> {
     Listbox listBdGuest, listBdRoom, lbData;
 
     @Wire
-    Label txtRate;
+    Label txtRate, lblKet;
 
     @Wire
     Datebox dbxCheckin, dbxCheckout;
@@ -77,9 +78,8 @@ public class Reserve extends SelectorComposer<Component> {
 
     @Wire
     Calendars calendars;
-    
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 
     @Override
     public void doAfterCompose(Component component) throws Exception {
@@ -157,17 +157,19 @@ public class Reserve extends SelectorComposer<Component> {
         clear();
     }
 
-     @Listen("onClick=#prev")
+    @Listen("onClick=#prev")
     public void prev() {
         calendars.previousPage();
     }
+
     @Listen("onClick=#next")
     public void next() {
         calendars.nextPage();
     }
-    
+
     public void clear() {
         txtRate.setValue("");
+        lblKet.setValue("");
         dbxCheckin.setValue(null);
         dbxCheckout.setValue(null);
 
@@ -351,10 +353,12 @@ public class Reserve extends SelectorComposer<Component> {
                 bd.setValue(data.getIdGuest().getNama());
                 loadListGuest(null, data.getIdGuest());
                 TtLogRoom ttLogRoom = loadBean.findLogRoom(data, new TrJnsLogRoom(new Integer("11")));
+               
                 bdRoom.setValue(ttLogRoom.getIdRoomRate().getIdRoom().getNamaRoom());
                 loadListRoom(null, ttLogRoom.getIdRoomRate().getIdRoom());
                 txtRate.setValue(ttLogRoom.getIdRoomRate().getRate().toString() + " / night");
                 loadCalendarSelect(data);
+                hitungCost(ttLogRoom.getIdRoomRate().getIdRoom());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -406,6 +410,35 @@ public class Reserve extends SelectorComposer<Component> {
         });
     }
 
+    public void hitungCost(TdRoom room){
+            TtRoomRate rate = loadBean.findMaxRoomRate(room);
+            Date dateIn = dbxCheckin.getValue();
+            Date dateOut = dbxCheckout.getValue();
+
+            Calendar cal1 = new GregorianCalendar();
+            Calendar cal2 = new GregorianCalendar();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+
+            cal1.setTime(dateIn);
+            cal2.setTime(dateOut);
+
+            lblKet.setValue("Total cost "+daysBetween(cal1.getTime(), cal2.getTime())+" days : " + rate.getRate() *daysBetween(cal1.getTime(), cal2.getTime()));
+
+    }
+    
+    @Listen("onChange=#dbxCheckout")
+    public void clickdbxCheckout() {
+        if (dbxCheckout.getValue() != null) {
+            hitungCost((TdRoom) listBdRoom.getSelectedItem().getValue());
+        }
+
+    }
+    
+    public int daysBetween(Date d1, Date d2){
+             return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+     }
+
     public void loadCalendar() {
         List<TtRoomRent> data = loadBean.listRoomRent();
         List<CalendarEvent> calendarEvents = new LinkedList<CalendarEvent>();
@@ -428,16 +461,14 @@ public class Reserve extends SelectorComposer<Component> {
     public void loadCalendarSelect(TtRoomRent ttRoomRent) {
         calendars.setModel(null);
         List<CalendarEvent> calendarEvents = new LinkedList<CalendarEvent>();
-        
-        // date plus one
-            Date dt = ttRoomRent.getCheckout();
-            Calendar c = Calendar.getInstance();
-            c.setTime(dt);
-            c.add(Calendar.DATE, 1);
-            dt = c.getTime();
 
-        
-        
+        // date plus one
+        Date dt = ttRoomRent.getCheckout();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, 1);
+        dt = c.getTime();
+
         TtLogRoom ttLogRoom = loadBean.findLogRoom(ttRoomRent, new TrJnsLogRoom(new Integer("11")));
         calendarEvents.add(new CalendarEventUtil(ttRoomRent.getCheckin(), dt, "#0D7813", "#4CB052", ttRoomRent.getIdGuest().getNama() + " room : " + ttLogRoom.getIdRoomRate().getIdRoom().getNamaRoom()));
 

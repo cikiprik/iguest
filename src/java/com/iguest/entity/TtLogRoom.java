@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "TT_LOG_ROOM", catalog = "db_iguest", schema = "")
 @NamedQueries({
     @NamedQuery(name = "TtLogRoom.findAll", query = "SELECT t FROM TtLogRoom t"),
+    @NamedQuery(name = "TtLogRoom.findByIdRoomRentMax", query = "SELECT t FROM TtLogRoom t WHERE t.idRoomRent = :idRoomRent order by t.idLogRoom desc"),
     @NamedQuery(name = "TtLogRoom.findByIdRoomRent", query = "SELECT t FROM TtLogRoom t WHERE t.idRoomRent = :idRoomRent and t.idJnsLogRoom = :idJnsLog order by t.idLogRoom desc"),
     @NamedQuery(name = "TtLogRoom.findByIdLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.idLogRoom = :idLogRoom"),
     @NamedQuery(name = "TtLogRoom.findByWaktuLogRoom", query = "SELECT t FROM TtLogRoom t WHERE t.waktuLogRoom = :waktuLogRoom")})

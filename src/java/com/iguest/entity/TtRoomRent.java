@@ -33,6 +33,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "TtRoomRent.findAll", query = "SELECT t FROM TtRoomRent t"),
     @NamedQuery(name = "TtRoomRent.findByIdRoomRent", query = "SELECT t FROM TtRoomRent t WHERE t.idRoomRent = :idRoomRent"),
+    @NamedQuery(name = "TtRoomRent.findByNama", query = "SELECT t FROM TtRoomRent t join t.idGuest x WHERE UPPER(x.nama) like :nama"),
+    @NamedQuery(name = "TtRoomRent.findByID", query = "SELECT t FROM TtRoomRent t join t.idGuest x WHERE UPPER(x.noIdentitas) like :identitas"),
     @NamedQuery(name = "TtRoomRent.findByCheckin", query = "SELECT t FROM TtRoomRent t WHERE t.checkin = :checkin"),
     @NamedQuery(name = "TtRoomRent.findByCheckout", query = "SELECT t FROM TtRoomRent t WHERE t.checkout = :checkout"),
     @NamedQuery(name = "TtRoomRent.findByWaktuRekam", query = "SELECT t FROM TtRoomRent t WHERE t.waktuRekam = :waktuRekam")})

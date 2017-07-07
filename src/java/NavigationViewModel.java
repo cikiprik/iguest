@@ -55,7 +55,7 @@ public class NavigationViewModel {
             addPage("iGuest", "Employee Data", "/data/employee.zul");
 
             addPage("Room", "Reserve", "/rooms/reserve.zul", "active");
-            addPage("Room", "Check in", "/customers/customers.zul", "active");
+            addPage("Room", "Check in", "/rooms/checkin.zul", "active");
             addPage("Room", "Check out", "/customers/customers.zul", "active");
             addPage("Room", "Status Check", "/customers/customers.zul", "inactive");
 
