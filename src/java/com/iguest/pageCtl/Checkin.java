@@ -13,6 +13,7 @@ import com.iguest.entity.TtRoomRent;
 import com.iguest.service.LoadDataBean;
 import com.iguest.utils.CalendarEventUtil;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -74,8 +75,6 @@ public class Checkin extends SelectorComposer<Component> {
         loadData(txtDataFilter.getValue(), (String) cmbFilter.getSelectedItem().getValue());
     }
 
-   
-
     public void loadData(String dataFilter, String filterBy) {
         List<TtRoomRent> data = null;
         if ((dataFilter == null || dataFilter.equals(""))) {
@@ -94,13 +93,6 @@ public class Checkin extends SelectorComposer<Component> {
             }
         }
         if (data != null) {
-            for (TtRoomRent ttRoomRent : data) {
-                TtLogRoom logRoomMax = loadBean.findLogRoomMax(ttRoomRent);
-                if (!logRoomMax.getIdJnsLogRoom().getIdJnsLogRoom().toString().equals("11")) {
-                    data.remove(ttRoomRent);
-                }
-
-            }
 
             lbData.setModel(new ListModelList(data, true));
 
@@ -108,6 +100,11 @@ public class Checkin extends SelectorComposer<Component> {
                 @Override
                 public void render(Listitem lstm, Object t, int i) throws Exception {
                     final TtRoomRent data = (TtRoomRent) t;
+
+                    TtLogRoom logRoomMax = loadBean.findLogRoomMax(data);
+                    if (!logRoomMax.getIdJnsLogRoom().getIdJnsLogRoom().toString().equals("11")) {
+                        lstm.detach();
+                    }
 
                     Listcell cellNama = new Listcell();
                     Label lblNama = new Label();
@@ -163,7 +160,7 @@ public class Checkin extends SelectorComposer<Component> {
                                         logRoom.setIdRoomRate(rate);
 
                                         loadBean.simpanObject(logRoom);
-                                        
+
                                         loadData(null, null);
                                         alert("Data Tersimpan !");
                                     }
@@ -192,7 +189,7 @@ public class Checkin extends SelectorComposer<Component> {
                                         logRoom.setIdRoomRate(rate);
 
                                         loadBean.simpanObject(logRoom);
-                                        
+
                                         loadData(null, null);
                                         alert("Data Tersimpan !");
                                     }
@@ -201,7 +198,7 @@ public class Checkin extends SelectorComposer<Component> {
                         }
 
                     });
-                    
+
                     cellStatus.appendChild(btnIn);
                     cellStatus.appendChild(btnCancel);
                     lstm.appendChild(cellStatus);
