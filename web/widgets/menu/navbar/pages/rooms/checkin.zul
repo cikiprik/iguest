@@ -38,14 +38,7 @@
                 <listheader label="Checkout"/>
                  <listheader label="Status"/>
             </listhead>
-            <listitem>
-                <listcell label=""/>
-                <listcell label=""/>    
-                <listcell label=""/>         
-                <listcell label=""/>
-                <listcell label=""/>
-                <listcell label=""/>
-            </listitem>
+           
 						
         </listbox>
          

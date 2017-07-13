@@ -66,8 +66,12 @@ public class Checkout extends SelectorComposer<Component> {
     @Override
     public void doAfterCompose(Component component) throws Exception {
         super.doAfterCompose(component);
-        cmbFilter.setSelectedIndex(0);
-        loadData(null, null);
+        try {
+            cmbFilter.setSelectedIndex(0);
+            loadData(null, null);
+        } catch (Exception e) {
+        }
+
     }
 
     @Listen("onClick=#btnCari")
@@ -182,7 +186,7 @@ public class Checkout extends SelectorComposer<Component> {
                                 public void onEvent(Event evt) throws InterruptedException {
                                     if (evt.getName().equals("onOK")) {
                                         // buka window payment
-                                        alert("Data Tersimpan !");
+
                                     }
                                 }
                             });

@@ -66,8 +66,12 @@ public class Checkin extends SelectorComposer<Component> {
     @Override
     public void doAfterCompose(Component component) throws Exception {
         super.doAfterCompose(component);
-        cmbFilter.setSelectedIndex(0);
-        loadData(null, null);
+        try {
+            cmbFilter.setSelectedIndex(0);
+            loadData(null, null);
+        } catch (Exception e) {
+        }
+
     }
 
     @Listen("onClick=#btnCari")
@@ -76,143 +80,153 @@ public class Checkin extends SelectorComposer<Component> {
     }
 
     public void loadData(String dataFilter, String filterBy) {
-        List<TtRoomRent> data = null;
-        if ((dataFilter == null || dataFilter.equals(""))) {
-            data = loadBean.listRoomRent();
-        } else {
+        try {
+            List<TtRoomRent> data = null;
+            if ((dataFilter == null || dataFilter.equals(""))) {
+                data = loadBean.listRoomRent();
+            } else {
 
-            System.out.println("cari");
-            // cari
-            if (filterBy.equals("0")) {
-                // nama
-                data = loadBean.listRoomRentByNama(dataFilter);
+                System.out.println("cari");
+                // cari
+                if (filterBy.equals("0")) {
+                    // nama
+                    data = loadBean.listRoomRentByNama(dataFilter);
+                }
+                if (filterBy.equals("1")) {
+                    // identitas
+                    data = loadBean.listRoomRentByID(dataFilter);
+                }
             }
-            if (filterBy.equals("1")) {
-                // identitas
-                data = loadBean.listRoomRentByID(dataFilter);
-            }
-        }
-        if (data != null) {
+            if (data != null) {
 
-            lbData.setModel(new ListModelList(data, true));
+                lbData.setModel(new ListModelList(data, true));
 
-            lbData.setItemRenderer(new ListitemRenderer() {
-                @Override
-                public void render(Listitem lstm, Object t, int i) throws Exception {
-                    final TtRoomRent data = (TtRoomRent) t;
+                lbData.setItemRenderer(new ListitemRenderer() {
+                    @Override
+                    public void render(Listitem lstm, Object t, int i) {
+                        try {
+                            final TtRoomRent data = (TtRoomRent) t;
 
-                    TtLogRoom logRoomMax = loadBean.findLogRoomMax(data);
-                    if (!logRoomMax.getIdJnsLogRoom().getIdJnsLogRoom().toString().equals("11")) {
-                        lstm.detach();
+                            TtLogRoom logRoomMax = loadBean.findLogRoomMax(data);
+                            if (!logRoomMax.getIdJnsLogRoom().getIdJnsLogRoom().toString().equals("11")) {
+                                lstm.detach();
+                            }
+
+                            Listcell cellNama = new Listcell();
+                            Label lblNama = new Label();
+                            lblNama.setValue(data.getIdGuest().getNama());
+                            cellNama.appendChild(lblNama);
+                            lstm.appendChild(cellNama);
+
+                            Listcell cellden = new Listcell();
+                            Label lblIden = new Label();
+                            lblIden.setValue(data.getIdGuest().getNoIdentitas() + " - " + data.getIdGuest().getIdJnsIdentitas().getJnsIdentitas());
+                            cellden.appendChild(lblIden);
+                            lstm.appendChild(cellden);
+
+                            Listcell cellJns = new Listcell();
+                            Label lblJns = new Label();
+
+                            TtLogRoom ttLogRoom = loadBean.findLogRoom(data, new TrJnsLogRoom(new Integer("11")));
+                            lblJns.setValue(ttLogRoom.getIdRoomRate().getIdRoom().getNamaRoom());
+                            cellJns.appendChild(lblJns);
+                            lstm.appendChild(cellJns);
+
+                            Listcell cellIn = new Listcell();
+                            Label lblIn = new Label();
+                            lblIn.setValue(sdf.format(data.getCheckin()));
+                            cellIn.appendChild(lblIn);
+                            lstm.appendChild(cellIn);
+
+                            Listcell cellOut = new Listcell();
+                            Label lblOut = new Label();
+                            lblOut.setValue(sdf.format(data.getCheckout()));
+                            cellOut.appendChild(lblOut);
+                            lstm.appendChild(cellOut);
+
+                            Listcell cellStatus = new Listcell();
+
+                            Button btnIn = new Button();
+                            btnIn.setLabel("Checkin");
+                            btnIn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+                                @Override
+                                public void onEvent(Event t) {
+                                    Messagebox.show("Check in guest?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
+                                        public void onEvent(Event evt) {
+                                            if (evt.getName().equals("onOK")) {
+                                                try {
+                                                    TtRoomRent simpan = data;
+                                                    // tt log room
+                                                    TtLogRoom logRoom = new TtLogRoom();
+                                                    // booked
+                                                    logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("1")));
+                                                    logRoom.setIdRoomRent(simpan);
+                                                    logRoom.setWaktuLogRoom(new Date());
+                                                    TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
+                                                    TtRoomRate rate = loadBean.findMaxRoomRate(room);
+                                                    logRoom.setIdRoomRate(rate);
+
+                                                    loadBean.simpanObject(logRoom);
+
+                                                    loadData(null, null);
+                                                    alert("Data Tersimpan !");
+                                                } catch (Exception e) {
+                                                }
+
+                                            }
+                                        }
+                                    });
+                                }
+
+                            });
+                            Button btnCancel = new Button();
+                            btnCancel.setLabel("Cancel");
+                            btnCancel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+                                @Override
+                                public void onEvent(Event t)  {
+                                    Messagebox.show("Cancel booking?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
+                                        public void onEvent(Event evt)  {
+                                            if (evt.getName().equals("onOK")) {
+                                                try {
+                                                    TtRoomRent simpan = data;
+                                                    // tt log room
+                                                    TtLogRoom logRoom = new TtLogRoom();
+                                                    // booked
+                                                    logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("10")));
+                                                    logRoom.setIdRoomRent(simpan);
+                                                    logRoom.setWaktuLogRoom(new Date());
+                                                    TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
+                                                    TtRoomRate rate = loadBean.findMaxRoomRate(room);
+                                                    logRoom.setIdRoomRate(rate);
+
+                                                    loadBean.simpanObject(logRoom);
+
+                                                    loadData(null, null);
+                                                    alert("Data Tersimpan !");
+                                                } catch (Exception e) {
+                                                }
+
+                                            }
+                                        }
+                                    });
+                                }
+
+                            });
+
+                            cellStatus.appendChild(btnIn);
+                            cellStatus.appendChild(btnCancel);
+                            lstm.appendChild(cellStatus);
+
+                            lstm.setValue(data);
+                        } catch (Exception e) {
+                        }
+
                     }
 
-                    Listcell cellNama = new Listcell();
-                    Label lblNama = new Label();
-                    lblNama.setValue(data.getIdGuest().getNama());
-                    cellNama.appendChild(lblNama);
-                    lstm.appendChild(cellNama);
+                });
 
-                    Listcell cellden = new Listcell();
-                    Label lblIden = new Label();
-                    lblIden.setValue(data.getIdGuest().getNoIdentitas() + " - " + data.getIdGuest().getIdJnsIdentitas().getJnsIdentitas());
-                    cellden.appendChild(lblIden);
-                    lstm.appendChild(cellden);
-
-                    Listcell cellJns = new Listcell();
-                    Label lblJns = new Label();
-
-                    TtLogRoom ttLogRoom = loadBean.findLogRoom(data, new TrJnsLogRoom(new Integer("11")));
-                    lblJns.setValue(ttLogRoom.getIdRoomRate().getIdRoom().getNamaRoom());
-                    cellJns.appendChild(lblJns);
-                    lstm.appendChild(cellJns);
-
-                    Listcell cellIn = new Listcell();
-                    Label lblIn = new Label();
-                    lblIn.setValue(sdf.format(data.getCheckin()));
-                    cellIn.appendChild(lblIn);
-                    lstm.appendChild(cellIn);
-
-                    Listcell cellOut = new Listcell();
-                    Label lblOut = new Label();
-                    lblOut.setValue(sdf.format(data.getCheckout()));
-                    cellOut.appendChild(lblOut);
-                    lstm.appendChild(cellOut);
-
-                    Listcell cellStatus = new Listcell();
-
-                    Button btnIn = new Button();
-                    btnIn.setLabel("Checkin");
-                    btnIn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-                        @Override
-                        public void onEvent(Event t) throws Exception {
-                            Messagebox.show("Check in guest?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
-                                public void onEvent(Event evt) throws InterruptedException {
-                                    if (evt.getName().equals("onOK")) {
-                                        try {
-                                            TtRoomRent simpan = data;
-                                        // tt log room
-                                        TtLogRoom logRoom = new TtLogRoom();
-                                        // booked
-                                        logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("1")));
-                                        logRoom.setIdRoomRent(simpan);
-                                        logRoom.setWaktuLogRoom(new Date());
-                                        TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
-                                        TtRoomRate rate = loadBean.findMaxRoomRate(room);
-                                        logRoom.setIdRoomRate(rate);
-
-                                        loadBean.simpanObject(logRoom);
-
-                                        loadData(null, null);
-                                        alert("Data Tersimpan !");
-                                        } catch (Exception e) {
-                                        }
-                                        
-                                    }
-                                }
-                            });
-                        }
-
-                    });
-                    Button btnCancel = new Button();
-                    btnCancel.setLabel("Cancel");
-                    btnCancel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-                        @Override
-                        public void onEvent(Event t) throws Exception {
-                            Messagebox.show("Cancel booking?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
-                                public void onEvent(Event evt) throws InterruptedException {
-                                    if (evt.getName().equals("onOK")) {
-                                        TtRoomRent simpan = data;
-                                        // tt log room
-                                        TtLogRoom logRoom = new TtLogRoom();
-                                        // booked
-                                        logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("10")));
-                                        logRoom.setIdRoomRent(simpan);
-                                        logRoom.setWaktuLogRoom(new Date());
-                                        TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
-                                        TtRoomRate rate = loadBean.findMaxRoomRate(room);
-                                        logRoom.setIdRoomRate(rate);
-
-                                        loadBean.simpanObject(logRoom);
-
-                                        loadData(null, null);
-                                        alert("Data Tersimpan !");
-                                    }
-                                }
-                            });
-                        }
-
-                    });
-
-                    cellStatus.appendChild(btnIn);
-                    cellStatus.appendChild(btnCancel);
-                    lstm.appendChild(cellStatus);
-
-                    lstm.setValue(data);
-
-                }
-
-            });
-
+            }
+        } catch (Exception e) {
         }
 
     }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window apply="com.iguest.pageCtl.OnlineReserve">
+        <grid width="99%">
+            <columns>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+                <column label="" width="5%"/>
+                <column label="" width="14%"/>
+                <column label="" width="34%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label>Jenis Identitas</label>	
+                    <combobox id="cmbJnsIdentitas"></combobox>
+               
+                    <label />
+                    <label>Nama</label>   
+                    <textbox id="txtNama"></textbox>
+                </row>
+                <row>
+                    <label>Nomer Identitas</label>	
+                    <textbox id="txtNo" />
+                    <label />
+                    <label>Alamat</label>   
+                        <textbox id="txtAlamat" multiline="true" height="40px" width="60%" />
+                    
+                </row>
+                <row>
+                    <label>Warga Negara</label>	
+                    <textbox id="txtNegara" />
+                    <label />
+                    <label>Kontak</label>   
+                        <textbox id="txtKontak" />
+                    
+                </row>
+                <row>
+                 
+                     <label>email</label>	
+                    <textbox id="txtEmail"/>
+               
+                    <label />
+                    <label>Checkin</label>   
+                    <datebox id="dbxCheckin" ></datebox>
+                </row>
+                <row>
+                    <label>Room</label>
+                    <hbox>
+                        <bandbox id="bdRoom" mold="rounded" autodrop="true">
+                            <bandpopup>
+                                <listbox id="listBdRoom" height="250px" width="300px" mold="paging" autopaging="true"
+                                         onSelect="bdRoom.value=self.selectedItem.label; bdRoom.close();">
+                                    <listhead>
+                                        <listheader label="Room List" />
+                                    </listhead>
+                                    
+                                </listbox>
+                            </bandpopup>
+                        </bandbox>
+                        <label id="txtRate" />
+                    </hbox>	
+                    
+                    <label />
+                    <label>Checkout</label>   
+                   <datebox id="dbxCheckout" ></datebox>
+                    
+                </row>
+                <row>
+                    <label>Description</label>	
+                    <label id="lblKet" />
+                    <label/>                
+                    <label/>
+
+                    <hbox>
+                        <button id="btnSimpan" label="Simpan" iconSclass="z-icon-edit "/>
+                    </hbox>
+                        
+                        
+                            
+                </row>
+            </rows>
+        </grid>
+         
+    </window>
+    
+</zk>
