@@ -56,7 +56,7 @@ public class NavigationViewModel {
 
             addPage("Room", "Reserve", "/rooms/reserve.zul", "active");
             addPage("Room", "Check in", "/rooms/checkin.zul", "active");
-            addPage("Room", "Check out", "/customers/customers.zul", "active");
+            addPage("Room", "Check out", "/rooms/checkout.zul", "active");
             addPage("Room", "Status Check", "/customers/customers.zul", "inactive");
 
             addPage("Guest", "Register", "/data/guest.zul");
@@ -74,8 +74,8 @@ public class NavigationViewModel {
 
 
             addPage("Room", "Reserve", "/rooms/reserve.zul", "active");
-            addPage("Room", "Check in", "/customers/customers.zul", "active");
-            addPage("Room", "Check out", "/customers/customers.zul", "active");
+            addPage("Room", "Check in", "/rooms/checkin.zul", "active");
+            addPage("Room", "Check out", "/rooms/checkout.zul", "active");
             addPage("Room", "Status Check", "/customers/customers.zul", "inactive");
 
             addPage("Guest", "Register", "/fan_service/events.zul");

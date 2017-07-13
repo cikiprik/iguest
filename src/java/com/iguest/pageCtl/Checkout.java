@@ -47,7 +47,7 @@ import org.zkoss.zul.Textbox;
  * @author dewa
  */
 @VariableResolver(org.zkoss.zkplus.cdi.DelegatingVariableResolver.class)
-public class Checkin extends SelectorComposer<Component> {
+public class Checkout extends SelectorComposer<Component> {
 
     @WireVariable(value = "LoadDataBean")
     LoadDataBean loadBean;
@@ -141,60 +141,47 @@ public class Checkin extends SelectorComposer<Component> {
                     Listcell cellStatus = new Listcell();
 
                     Button btnIn = new Button();
-                    btnIn.setLabel("Checkin");
+                    btnIn.setLabel("Checkout");
                     btnIn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
                         @Override
                         public void onEvent(Event t) throws Exception {
-                            Messagebox.show("Check in guest?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
+                            Messagebox.show("Check out guest?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
                                 public void onEvent(Event evt) throws InterruptedException {
                                     if (evt.getName().equals("onOK")) {
                                         try {
                                             TtRoomRent simpan = data;
-                                        // tt log room
-                                        TtLogRoom logRoom = new TtLogRoom();
-                                        // booked
-                                        logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("1")));
-                                        logRoom.setIdRoomRent(simpan);
-                                        logRoom.setWaktuLogRoom(new Date());
-                                        TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
-                                        TtRoomRate rate = loadBean.findMaxRoomRate(room);
-                                        logRoom.setIdRoomRate(rate);
+                                            // tt log room
+                                            TtLogRoom logRoom = new TtLogRoom();
+                                            // booked
+                                            logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("2")));
+                                            logRoom.setIdRoomRent(simpan);
+                                            logRoom.setWaktuLogRoom(new Date());
+                                            TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
+                                            TtRoomRate rate = loadBean.findMaxRoomRate(room);
+                                            logRoom.setIdRoomRate(rate);
 
-                                        loadBean.simpanObject(logRoom);
+                                            loadBean.simpanObject(logRoom);
 
-                                        loadData(null, null);
-                                        alert("Data Tersimpan !");
+                                            loadData(null, null);
+                                            alert("Data Tersimpan !");
                                         } catch (Exception e) {
                                         }
-                                        
+
                                     }
                                 }
                             });
                         }
 
                     });
-                    Button btnCancel = new Button();
-                    btnCancel.setLabel("Cancel");
-                    btnCancel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+                    Button btnPay = new Button();
+                    btnPay.setLabel("Payment");
+                    btnPay.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
                         @Override
                         public void onEvent(Event t) throws Exception {
-                            Messagebox.show("Cancel booking?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
+                            Messagebox.show("Open payment?", "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
                                 public void onEvent(Event evt) throws InterruptedException {
                                     if (evt.getName().equals("onOK")) {
-                                        TtRoomRent simpan = data;
-                                        // tt log room
-                                        TtLogRoom logRoom = new TtLogRoom();
-                                        // booked
-                                        logRoom.setIdJnsLogRoom(new TrJnsLogRoom(new Integer("10")));
-                                        logRoom.setIdRoomRent(simpan);
-                                        logRoom.setWaktuLogRoom(new Date());
-                                        TdRoom room = simpan.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom();
-                                        TtRoomRate rate = loadBean.findMaxRoomRate(room);
-                                        logRoom.setIdRoomRate(rate);
-
-                                        loadBean.simpanObject(logRoom);
-
-                                        loadData(null, null);
+                                        // buka window payment
                                         alert("Data Tersimpan !");
                                     }
                                 }
@@ -202,9 +189,9 @@ public class Checkin extends SelectorComposer<Component> {
                         }
 
                     });
-
+                    cellStatus.appendChild(btnPay);
                     cellStatus.appendChild(btnIn);
-                    cellStatus.appendChild(btnCancel);
+
                     lstm.appendChild(cellStatus);
 
                     lstm.setValue(data);
