@@ -61,7 +61,7 @@ public class NavigationViewModel {
 
             addPage("Guest", "Register", "/data/guest.zul");
             addPage("Guest", "Requests", "/fan_service/promotion.zul");
-            addPage("Guest", "Payments", "/fan_service/promotion.zul");
+            addPage("Guest", "Payments", "/data/payments.zul");
 
             addPage("Reports", "Bookings/Availability", "/orders/orders.zul", "in-preparation");
             addPage("Reports", "Arrival/Departure ", "/orders/orders.zul", "ready");
@@ -80,7 +80,7 @@ public class NavigationViewModel {
 
             addPage("Guest", "Register", "/fan_service/events.zul");
             addPage("Guest", "Requests", "/fan_service/promotion.zul");
-            addPage("Guest", "Payments", "/fan_service/promotion.zul");
+            addPage("Guest", "Payments", "/data/payments.zul");
 
             addPage("Reports", "General", "/orders/orders.zul", "later");
         }

@@ -12,8 +12,10 @@ import com.iguest.entity.TdUser;
 import com.iguest.entity.TrJnsEmployee;
 import com.iguest.entity.TrJnsIdentitas;
 import com.iguest.entity.TrJnsLogRoom;
+import com.iguest.entity.TrJnsPayment;
 import com.iguest.entity.TrJnsRoom;
 import com.iguest.entity.TrJnsUser;
+import com.iguest.entity.TrPaymentStatus;
 import com.iguest.entity.TtLogRoom;
 import com.iguest.entity.TtRoomRate;
 import com.iguest.entity.TtRoomRent;
@@ -48,6 +50,15 @@ public class LoadDataBean {
        return (List<TrJnsIdentitas>) em.createNamedQuery("TrJnsIdentitas.findAll").getResultList();
         
     }
+    public List<TrJnsPayment> listJnsPayment (){
+       return (List<TrJnsPayment>) em.createNamedQuery("TrJnsPayment.findAll").getResultList();
+        
+    }
+    public List<TrPaymentStatus> listJnsPaymentStatus (){
+       return (List<TrPaymentStatus>) em.createNamedQuery("TrPaymentStatus.findAll").getResultList();
+        
+    }
+    
     
     public List<TrJnsRoom> listJnsRoom (){
        return (List<TrJnsRoom>) em.createNamedQuery("TrJnsRoom.findAll").getResultList();
