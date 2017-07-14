@@ -160,9 +160,6 @@ public class Checkout extends SelectorComposer<Component> {
                         
 //                        
                         final Datebox dOut = new Datebox();
-                         if (data.getIdPayment() != null) {
-                            dOut.setDisabled(true);
-                        }
                         dOut.setValue(data.getCheckout());
                         dOut.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
                             @Override
