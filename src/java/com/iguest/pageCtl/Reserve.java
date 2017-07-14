@@ -430,7 +430,10 @@ public class Reserve extends SelectorComposer<Component> {
     @Listen("onChange=#dbxCheckout")
     public void clickdbxCheckout() {
         if (dbxCheckout.getValue() != null) {
-            hitungCost((TdRoom) listBdRoom.getSelectedItem().getValue());
+            if(listBdRoom.getSelectedItem()!=null){
+                hitungCost((TdRoom) listBdRoom.getSelectedItem().getValue());
+            }
+            
         }
 
     }

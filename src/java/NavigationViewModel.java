@@ -57,10 +57,10 @@ public class NavigationViewModel {
             addPage("Room", "Reserve", "/rooms/reserve.zul", "active");
             addPage("Room", "Check in", "/rooms/checkin.zul", "active");
             addPage("Room", "Check out", "/rooms/checkout.zul", "active");
-            addPage("Room", "Status Check", "/customers/customers.zul", "inactive");
+            addPage("Room", "Status Check", "/rooms/statuscheck.zul", "inactive");
 
             addPage("Guest", "Register", "/data/guest.zul");
-            addPage("Guest", "Requests", "/fan_service/promotion.zul");
+//            addPage("Guest", "Requests", "/fan_service/promotion.zul");
             addPage("Guest", "Payments", "/data/payments.zul");
 
             addPage("Reports", "Bookings/Availability", "/orders/orders.zul", "in-preparation");
@@ -87,9 +87,9 @@ public class NavigationViewModel {
 
         if (role == 4) {
 
-            addPage("Room", "Status Check", "/customers/customers.zul", "inactive");
+            addPage("Room", "Status Check", "/rooms/statuscheck.zul", "inactive");
 
-            addPage("Guest", "Requests", "/fan_service/promotion.zul");
+//            addPage("Guest", "Requests", "/fan_service/promotion.zul");
 
             addPage("Reports", "General", "/orders/orders.zul", "later");
         }

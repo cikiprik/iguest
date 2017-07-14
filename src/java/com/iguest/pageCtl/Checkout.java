@@ -39,6 +39,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.ComboitemRenderer;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -115,6 +116,10 @@ public class Checkout extends SelectorComposer<Component> {
                     public void render(Listitem lstm, Object t, int i) throws Exception {
                         final TtRoomRent data = (TtRoomRent) t;
 
+                        final Label lblTotPayment = new Label();
+                         final Calendar cal1 = new GregorianCalendar();
+                        final Calendar cal2 = new GregorianCalendar();
+
                         TtLogRoom logRoomMax = loadBean.findLogRoomMax(data);
                         if (!logRoomMax.getIdJnsLogRoom().getIdJnsLogRoom().toString().equals("1")) {
                             lstm.detach();
@@ -147,9 +152,31 @@ public class Checkout extends SelectorComposer<Component> {
                         lstm.appendChild(cellIn);
 
                         Listcell cellOut = new Listcell();
-                        Label lblOut = new Label();
-                        lblOut.setValue(sdf.format(data.getCheckout()));
-                        cellOut.appendChild(lblOut);
+//                        Label lblOut = new Label();
+//                        lblOut.setValue(sdf.format(data.getCheckout()));
+                        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+                        final TtRoomRate rate = loadBean.findMaxRoomRate(data.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom());
+                        cal1.setTime(data.getCheckin());
+                        
+//                        
+                        final Datebox dOut = new Datebox();
+                         if (data.getIdPayment() != null) {
+                            dOut.setDisabled(true);
+                        }
+                        dOut.setValue(data.getCheckout());
+                        dOut.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+                            @Override
+                            public void onEvent(Event t) throws Exception {
+                                data.setCheckout(dOut.getValue());
+                                loadBean.ubahObject(data);
+                                cal2.setTime(dOut.getValue());
+                                lblTotPayment.setValue(" Total : " + daysBetween(cal1.getTime(), cal2.getTime()) + " days : " + rate.getRate() * daysBetween(cal1.getTime(), cal2.getTime()));
+
+                            }
+
+                        });
+
+                        cellOut.appendChild(dOut);
                         lstm.appendChild(cellOut);
 
                         Listcell cellStatus = new Listcell();
@@ -238,11 +265,7 @@ public class Checkout extends SelectorComposer<Component> {
 
                         });
 
-                        final Calendar cal1 = new GregorianCalendar();
-                        final Calendar cal2 = new GregorianCalendar();
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-                        final TtRoomRate rate = loadBean.findMaxRoomRate(data.getTtLogRoomList().get(0).getIdRoomRate().getIdRoom());
+                       
                         cal1.setTime(data.getCheckin());
                         cal2.setTime(data.getCheckout());
 
@@ -280,7 +303,6 @@ public class Checkout extends SelectorComposer<Component> {
 
                         });
 
-                        Label lblTotPayment = new Label();
                         lblTotPayment.setValue(" Total : " + daysBetween(cal1.getTime(), cal2.getTime()) + " days : " + rate.getRate() * daysBetween(cal1.getTime(), cal2.getTime()));
 
                         cellStatus.appendChild(cbxJnsPembayaran);

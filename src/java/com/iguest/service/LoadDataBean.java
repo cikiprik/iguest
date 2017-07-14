@@ -70,6 +70,11 @@ public class LoadDataBean {
         
     }
     
+    public List<TrJnsLogRoom> listJnsLogRoom (){
+       return (List<TrJnsLogRoom>) em.createNamedQuery("TrJnsLogRoom.findAll").getResultList();
+        
+    }
+    
     public List<TdUser> listUser (){
        return (List<TdUser>) em.createNamedQuery("TdUser.findAll").getResultList();
         
