@@ -113,8 +113,9 @@ public class Checkout extends SelectorComposer<Component> {
 
                 lbData.setItemRenderer(new ListitemRenderer() {
                     @Override
-                    public void render(Listitem lstm, Object t, int i) throws Exception {
-                        final TtRoomRent data = (TtRoomRent) t;
+                    public void render(Listitem lstm, Object t, int i)  {
+                        try {
+                          final TtRoomRent data = (TtRoomRent) t;
 
                         final Label lblTotPayment = new Label();
                          final Calendar cal1 = new GregorianCalendar();
@@ -310,7 +311,10 @@ public class Checkout extends SelectorComposer<Component> {
 
                         lstm.appendChild(cellStatus);
 
-                        lstm.setValue(data);
+                        lstm.setValue(data);  
+                        } catch (Exception e) {
+                        }
+                        
 
                     }
 

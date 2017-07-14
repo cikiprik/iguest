@@ -124,10 +124,10 @@ public class OnlineReserve extends SelectorComposer<Component> {
     @Listen("onChange=#dbxCheckout")
     public void clickdbxCheckout() {
         if (dbxCheckout.getValue() != null) {
-            if(listBdRoom.getSelectedItem()!=null){
+            if (listBdRoom.getSelectedItem() != null) {
                 hitungCost((TdRoom) listBdRoom.getSelectedItem().getValue());
             }
-            
+
         }
 
     }
@@ -201,14 +201,14 @@ public class OnlineReserve extends SelectorComposer<Component> {
 
     public void loadCmbJnsIdentitas(TrJnsIdentitas selData) {
         List<TrJnsIdentitas> data = loadBean.listJnsIdentitas();
-        cmbJnsIdentitas.setModel(new ListModelList(data, true)); // cmbKota = id zk combobox
+        cmbJnsIdentitas.setModel(new ListModelList(data)); // cmbKota = id zk combobox
         cmbJnsIdentitas.setItemRenderer(new ComboitemRenderer() {
             @Override
             public void render(Comboitem cmbtm, Object t, int i) throws Exception {
                 TrJnsIdentitas tsk = (TrJnsIdentitas) t;
                 cmbtm.setLabel(tsk.getJnsIdentitas());
                 cmbtm.setValue(tsk);
-               
+
             }
 
         });
@@ -219,7 +219,6 @@ public class OnlineReserve extends SelectorComposer<Component> {
         lblKet.setValue("");
         dbxCheckin.setValue(null);
         dbxCheckout.setValue(null);
-
 
         bdRoom.setValue(null);
         listBdRoom.setSelectedItem(null);
@@ -246,28 +245,36 @@ public class OnlineReserve extends SelectorComposer<Component> {
                         TdGuest dataLama = loadBean.findGuest(txtNo.getValue());
 
                         if (dataLama != null) {
-                            dataLama.setIdJnsIdentitas((TrJnsIdentitas) cmbJnsIdentitas.getSelectedItem().getValue());
-                            dataLama.setAlamat(txtAlamat.getValue());
-                            dataLama.setEmail(txtEmail.getValue());
-                            dataLama.setKontak(txtKontak.getValue());
-                            dataLama.setNama(txtNama.getValue());
-                            dataLama.setNoIdentitas(txtNo.getValue());
-                            dataLama.setWargaNegara(txtNegara.getValue());
+                            try {
+                                dataLama.setIdJnsIdentitas((TrJnsIdentitas) cmbJnsIdentitas.getSelectedItem().getValue());
+                                dataLama.setAlamat(txtAlamat.getValue());
+                                dataLama.setEmail(txtEmail.getValue());
+                                dataLama.setKontak(txtKontak.getValue());
+                                dataLama.setNama(txtNama.getValue());
+                                dataLama.setNoIdentitas(txtNo.getValue());
+                                dataLama.setWargaNegara(txtNegara.getValue());
 
-                            loadBean.ubahObject(dataLama);
-                            disimpan = dataLama;
+                                loadBean.ubahObject(dataLama);
+                                disimpan = dataLama;
+                            } catch (Exception e) {
+                            }
+
                         } else {
-                            TdGuest data = new TdGuest();
-                            data.setIdJnsIdentitas((TrJnsIdentitas) cmbJnsIdentitas.getSelectedItem().getValue());
-                            data.setAlamat(txtAlamat.getValue());
-                            data.setEmail(txtEmail.getValue());
-                            data.setKontak(txtKontak.getValue());
-                            data.setNama(txtNama.getValue());
-                            data.setNoIdentitas(txtNo.getValue());
-                            data.setWargaNegara(txtNegara.getValue());
+                            try {
+                                TdGuest data = new TdGuest();
+                                data.setIdJnsIdentitas((TrJnsIdentitas) cmbJnsIdentitas.getSelectedItem().getValue());
+                                data.setAlamat(txtAlamat.getValue());
+                                data.setEmail(txtEmail.getValue());
+                                data.setKontak(txtKontak.getValue());
+                                data.setNama(txtNama.getValue());
+                                data.setNoIdentitas(txtNo.getValue());
+                                data.setWargaNegara(txtNegara.getValue());
 
-                            loadBean.simpanObject(data);
-                            disimpan = data;
+                                loadBean.simpanObject(data);
+                                disimpan = data;
+                            } catch (Exception e) {
+                            }
+
                         }
 
                         // insert tt room rent
@@ -290,8 +297,9 @@ public class OnlineReserve extends SelectorComposer<Component> {
                         logRoom.setIdRoomRate(rate);
 
                         loadBean.simpanObject(logRoom);
-                        
-                          alert("Data Tersimpan !");
+
+                        alert("Data Tersimpan !");
+                          clear();
 
                     }
                 }
@@ -301,7 +309,7 @@ public class OnlineReserve extends SelectorComposer<Component> {
             e.printStackTrace();
         }
 
-        clear();
+      
     }
 
 }
