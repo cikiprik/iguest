@@ -171,6 +171,7 @@ public class Checkin extends SelectorComposer<Component> {
                                                     loadData(null, null);
                                                     alert("Data Tersimpan !");
                                                 } catch (Exception e) {
+                                                    System.out.println("e"+e);
                                                 }
 
                                             }

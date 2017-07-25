@@ -66,7 +66,7 @@ public class NavigationViewModel {
             addPage("Reports", "Bookings/Availability", "/orders/orders.zul", "in-preparation");
             addPage("Reports", "Arrival/Departure ", "/orders/orders.zul", "ready");
             addPage("Reports", "Sales", "/orders/orders.zul", "shipping");
-            addPage("Reports", "General", "/orders/orders.zul", "later");
+            addPage("Reports", "General", "/reports/general.zul", "later");
         }
 
         if (role == 3) {
@@ -82,7 +82,7 @@ public class NavigationViewModel {
 //            addPage("Guest", "Requests", "/fan_service/promotion.zul");
             addPage("Guest", "Payments", "/data/payments.zul");
 
-            addPage("Reports", "General", "/orders/orders.zul", "later");
+            addPage("Reports", "General", "/reports/general.zul", "later");
         }
 
         if (role == 4) {
@@ -91,7 +91,7 @@ public class NavigationViewModel {
 
 //            addPage("Guest", "Requests", "/fan_service/promotion.zul");
 
-            addPage("Reports", "General", "/orders/orders.zul", "later");
+            addPage("Reports", "General", "/reports/general.zul", "later");
         }
 
     }
