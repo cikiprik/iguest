@@ -1,0 +1,9 @@
+<?script src="/js/notification.js"?>
+<zk>
+    <window apply="com.iguest.pageCtl.SalesReport">
+        <charts id="chart" zoomType="x" enableZoomSelection="false" title="iGuest Monthly Sales Report"/>
+        <charts id="chartHarian" zoomType="x" enableZoomSelection="false" title="iGuest Daily Sales Report"/>
+        
+        <button id="btn" visible="false" label="Reset Zoom"/> 
+    </window>
+</zk>

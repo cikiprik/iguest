@@ -219,6 +219,9 @@ public class Checkin extends SelectorComposer<Component> {
                             lstm.appendChild(cellStatus);
 
                             lstm.setValue(data);
+                            
+                           
+                            
                         } catch (Exception e) {
                         }
 
